@@ -38,7 +38,7 @@ The Incident Management System aims to provide a comprehensive solution for repo
 
 1. **Clone the Repository**:
     ```sh
-    git clone https://github.com/your-username/incident-management.git
+    git clone https://github.com/jeffyzhu/incident-management.git
     cd incident-management
     ```
 
