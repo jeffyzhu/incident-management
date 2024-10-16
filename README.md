@@ -1,6 +1,52 @@
-# Getting Started with Create React App
+# Incident Management Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+
+This is the frontend application for the Incident Management system. It is built using React and communicates with the backend service to provide a user-friendly interface for managing incidents.
+
+## Prerequisites
+
+- Node.js (version 14 or later)
+- npm (version 6 or later)
+
+## Setup and Running
+
+### Local Development
+
+1. **Install Dependencies**:
+    ```sh
+    npm install
+    ```
+
+2. **Run the Application**:
+    ```sh
+    npm start
+    ```
+
+3. **Access the Application**:
+   The application will be available at `http://localhost:3000`.
+
+### Docker
+
+1. **Build Docker Image**:
+    ```sh
+    docker build -t incident-management-frontend .
+    ```
+
+2. **Run Docker Container**:
+    ```sh
+    docker run -p 3000:3000 incident-management-frontend
+    ```
+
+## Environment Variables
+
+Create a `.env` file in the root directory of the project and add the following variable:
+
+```env
+REACT_APP_API_URL=http://localhost:8080
+```
+
+- `REACT_APP_API_URL`: The base URL of the backend API.
 
 ## Available Scripts
 
@@ -9,10 +55,10 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
 ### `npm test`
 
@@ -29,42 +75,33 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Authentication
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The frontend uses JWT-based authentication to interact with the backend. Upon successful login, a token is stored in the local storage and is included in the Authorization header for subsequent requests.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## API Endpoints
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The frontend communicates with the following backend API endpoints:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Authentication**:
+    - `POST /auth/login`: Authenticate users and obtain a JWT.
 
-## Learn More
+- **Incidents**:
+    - `GET /incidents`: List all incidents.
+    - `POST /incidents`: Create a new incident.
+    - `GET /incidents/{id}`: Get incident by ID.
+    - `PUT /incidents/{id}`: Update incident by ID.
+    - `DELETE /incidents/{id}`: Delete incident by ID.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Dependencies
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- React
+- react-router-dom
+- axios (for API requests)
+- jwt-decode (for decoding JWT tokens)
+- Redux (for state management) - if applicable
+- Material-UI (for UI components) - optional
 
-### Code Splitting
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for more details.
