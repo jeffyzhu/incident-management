@@ -121,9 +121,6 @@ For detailed information, refer to the [Frontend README](frontend/README.md).
 - React
 - react-router-dom
 - axios (for API requests)
-- jwt-decode (for decoding JWT tokens)
-- Redux (for state management) - if applicable
-- Material-UI (for UI components) - optional
 
 
 ## Contact
