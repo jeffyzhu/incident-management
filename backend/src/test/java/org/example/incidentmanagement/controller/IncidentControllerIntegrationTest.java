@@ -2,7 +2,6 @@ package org.example.incidentmanagement.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.incidentmanagement.model.Incident;
-import org.example.incidentmanagement.repository.IncidentRepository;
 import org.example.incidentmanagement.service.IncidentService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,9 +37,6 @@ class IncidentControllerIntegrationTest {
     @Autowired
     private IncidentService incidentService;
 
-    @Autowired
-    private IncidentRepository incidentRepository;
-
     private Incident incident;
 
     @BeforeEach
@@ -53,7 +49,7 @@ class IncidentControllerIntegrationTest {
 
     @AfterEach
     void tearDown() {
-        incidentRepository.deleteAll(); // Clean up the repository after each test
+        incidentService.deleteAllIncidents();// Clean up the repository after each test
     }
 
     @Test

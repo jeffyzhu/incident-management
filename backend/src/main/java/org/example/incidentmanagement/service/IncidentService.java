@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -70,5 +69,10 @@ public class IncidentService {
             incidentRepository.delete(incident);
             return true;
         }).orElseThrow(() -> new ResourceNotFoundException("Incident not found with ID: " + id));
+    }
+
+    @CacheEvict(value = "incidents", allEntries = true)
+    public void deleteAllIncidents() {
+        incidentRepository.deleteAll();
     }
 }
