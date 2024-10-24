@@ -18,7 +18,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the packaged JAR file from the previous step
-COPY --from=builder /app/target/Incident-management-0.5-SNAPSHOT.jar app.jar
+COPY --from=builder /app/target/Incident-management-0.6-SNAPSHOT.jar app.jar
 
 # Expose port 8080
 EXPOSE 8080
