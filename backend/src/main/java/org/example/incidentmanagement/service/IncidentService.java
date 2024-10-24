@@ -3,6 +3,7 @@ package org.example.incidentmanagement.service;
 import org.example.incidentmanagement.exception.ResourceNotFoundException;
 import org.example.incidentmanagement.model.Incident;
 import org.example.incidentmanagement.repository.IncidentRepository;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,12 +18,14 @@ import java.util.Optional;
 public class IncidentService {
 
     private final IncidentRepository incidentRepository;
+    private final CacheManager cacheManager;
 
-    public IncidentService(IncidentRepository incidentRepository) {
+    public IncidentService(IncidentRepository incidentRepository, CacheManager cacheManager) {
         this.incidentRepository = incidentRepository;
+        this.cacheManager = cacheManager;
     }
 
-    @Cacheable("incidents")
+    @Cacheable(value = "incidents", key = "'all'")
     public List<Incident> getAllIncidents() {
         return incidentRepository.findAll();
     }
@@ -33,6 +36,7 @@ public class IncidentService {
     }
 
     @CachePut(value = "incidents", key = "#result.id")
+    @CacheEvict(value = "incidents", key = "'all'")
     public Incident addIncident(Incident incident) {
         try {
             return incidentRepository.save(incident);
@@ -46,6 +50,7 @@ public class IncidentService {
     }
 
     @CachePut(value = "incidents", key = "#id")
+    @CacheEvict(value = "incidents", key = "'all'")
     public Incident updateIncident(Long id, Incident updatedIncident) {
         try {
             return incidentRepository.findById(id).map(existingIncident -> {
@@ -63,10 +68,16 @@ public class IncidentService {
         }
     }
 
-    @CacheEvict(value = "incidents", key = "#id")
+
     public boolean deleteIncident(Long id) {
         return incidentRepository.findById(id).map(incident -> {
             incidentRepository.delete(incident);
+
+            if (cacheManager.getCache("incidents") != null) {
+                cacheManager.getCache("incidents").evict(id);
+                cacheManager.getCache("incidents").clear();
+            }
+
             return true;
         }).orElseThrow(() -> new ResourceNotFoundException("Incident not found with ID: " + id));
     }
